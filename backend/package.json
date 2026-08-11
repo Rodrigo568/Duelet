@@ -5,7 +5,8 @@
     "private": true,
     "devDependencies": {
         "@types/bun": "latest",
-        "prettier": "^3.9.6"
+        "prettier": "^3.9.6",
+        "supertest": "^7.2.2"
     },
     "peerDependencies": {
         "typescript": "^5"
@@ -15,12 +16,15 @@
         "cors": "^2.8.6",
         "dotenv": "^17.4.2",
         "express": "^5.2.1",
+        "jose": "^6.2.8",
         "mysql2": "^3.23.3"
     },
     "scripts": {
         "dev": "bun --watch src/app.js",
         "start": "bun src/app.js",
         "lint": "eslint .",
-        "test": "bun test"
+        "test": "bun test",
+        "test:unit": "bun test tests/unit",
+        "test:integration": "bun test --env-file=.env.test tests/integration"
     }
 }

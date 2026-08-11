@@ -4,8 +4,14 @@ import UserRepository from "./repositories/UserRepository.js";
 import UserService from "./services/UserService.js";
 import UserController from "./controllers/UserController.js";
 
+import AuthService from "./services/AuthService.js";
+import AuthController from "./controllers/AuthController.js";
+
 const userRepository = new UserRepository(db);
 const userService = new UserService(userRepository);
 const userController = new UserController(userService);
 
-export { userRepository, userService, userController };
+const authService = new AuthService(userRepository, userService);
+const authController = new AuthController(authService);
+
+export { userRepository, userService, userController, authService, authController };

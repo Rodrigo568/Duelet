@@ -58,10 +58,30 @@ describe("UserService", () => {
                 timezone: "America/Montevideo",
             };
 
-            await expect(userService.createUser(userData)).rejects.toThrow("An user with this email already exists.");
+            await expect(userService.createUser(userData)).rejects.toThrow("A user with this email already exists.");
 
             expect(userRepository.findByEmail).toHaveBeenCalledWith("rodrigo@test.com");
             expect(userRepository.create).not.toHaveBeenCalled();
+        });
+        test("uses UTC when timezone is not provided", async () => {
+            const userRepository = {
+                findByEmail: mock(async () => null),
+
+                create: mock(async (user) => ({
+                    ...user,
+                    id: 1,
+                })),
+            };
+
+            const userService = new UserService(userRepository);
+
+            const user = await userService.createUser({
+                name: "Rodrigo",
+                email: "rodrigo@test.com",
+                password: "password123",
+            });
+
+            expect(user.timezone).toBe("UTC");
         });
     });
 

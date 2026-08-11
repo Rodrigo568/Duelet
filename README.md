@@ -20,6 +20,8 @@ Duelet is currently in early development. Some of these features are still being
 
 The project is open source and contributions are welcome. Feel free to open an issue, suggest a feature or submit a pull request.
 
+This app was developed by me as a personal practice project, with the goal of applying what I’ve learned both at university and through self-study. AI was only used to assist with some frontend UI code and visual styling.
+
 ## License
 
 TBD

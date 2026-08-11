@@ -1,5 +1,10 @@
 import User from "../models/User.js";
+
 import { hashPassword } from "../utils/passwordUtils.js";
+
+import ConflictError from "../errors/ConflictError.js";
+import ValidationError from "../errors/ValidationError.js";
+import NotFoundError from "../errors/NotFoundError.js";
 
 class UserService {
     constructor(userRepository) {
@@ -10,7 +15,7 @@ class UserService {
         const existingUser = await this.userRepository.findByEmail(userData.email);
 
         if (existingUser) {
-            throw new Error("An user with this email already exists.");
+            throw new ConflictError("A user with this email already exists.");
         }
 
         const passwordHash = await hashPassword(userData.password);
@@ -19,7 +24,7 @@ class UserService {
             name: userData.name,
             email: userData.email,
             passwordHash: passwordHash,
-            timezone: userData.timezone,
+            timezone: userData.timezone ?? "UTC",
         });
 
         return await this.userRepository.create(user);
@@ -27,12 +32,13 @@ class UserService {
 
     async getUserById(id) {
         if (!id) {
-            throw new Error("User ID is required.");
+            throw new ValidationError("User ID is required.");
         }
+
         const user = await this.userRepository.findById(id);
 
         if (!user) {
-            throw new Error("User not found.");
+            throw new NotFoundError("User not found.");
         }
 
         return user;
@@ -40,13 +46,13 @@ class UserService {
 
     async getUserByEmail(email) {
         if (!email) {
-            throw new Error("User email is required.");
+            throw new ValidationError("User email is required.");
         }
 
         const user = await this.userRepository.findByEmail(email);
 
         if (!user) {
-            throw new Error("User not found.");
+            throw new NotFoundError("User not found.");
         }
 
         return user;
@@ -55,14 +61,16 @@ class UserService {
     async updateUser(id, userData) {
         // TODO
     }
+
     async deleteUser(id) {
         if (!id) {
-            throw new Error("User ID is required.");
+            throw new ValidationError("User ID is required.");
         }
+
         const user = await this.userRepository.findById(id);
 
         if (!user) {
-            throw new Error("User not found.");
+            throw new NotFoundError("User not found.");
         }
 
         return await this.userRepository.delete(id);

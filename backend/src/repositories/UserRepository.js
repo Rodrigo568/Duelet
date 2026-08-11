@@ -1,6 +1,24 @@
+import User from "../models/User.js";
+
 class UserRepository {
     constructor(db) {
         this.db = db;
+    }
+
+    toModel(row) {
+        if (!row) {
+            return null;
+        }
+
+        return new User({
+            id: row.id,
+            name: row.name,
+            email: row.email,
+            passwordHash: row.password_hash,
+            timezone: row.timezone,
+            createdAt: row.created_at,
+            updatedAt: row.updated_at,
+        });
     }
 
     async create(user) {
@@ -14,14 +32,9 @@ class UserRepository {
             VALUES (?, ?, ?, ?)
         `;
 
-        const [result] = await this.db.execute(sql, [
-            user.name,
-            user.email,
-            user.passwordHash,
-            user.timezone,
-        ]);
+        const [result] = await this.db.execute(sql, [user.name, user.email, user.passwordHash, user.timezone]);
 
-        return result;
+        return await this.findById(result.insertId);
     }
 
     async findById(id) {
@@ -33,11 +46,7 @@ class UserRepository {
 
         const [rows] = await this.db.execute(sql, [id]);
 
-        if (rows.length === 0) {
-            return null;
-        }
-
-        return rows[0];
+        return this.toModel(rows[0]);
     }
 
     async findByEmail(email) {
@@ -49,11 +58,7 @@ class UserRepository {
 
         const [rows] = await this.db.execute(sql, [email]);
 
-        if (rows.length === 0) {
-            return null;
-        }
-
-        return rows[0];
+        return this.toModel(rows[0]);
     }
 
     async update(id, user) {
@@ -68,7 +73,7 @@ class UserRepository {
 
         const [result] = await this.db.execute(sql, [id]);
 
-        return result;
+        return result.affectedRows > 0;
     }
 }
 

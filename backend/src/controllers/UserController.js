@@ -3,33 +3,56 @@ class UserController {
         this.userService = userService;
     }
 
-    async create(req, res, next) {
-        try {
-            const user = await this.userService.createUser(req.body);
+    async create(req, res) {
+        const user = await this.userService.createUser(req.body);
 
-            res.status(201).json({
-                success: true,
-                data: user,
-            });
-        } catch (error) {
-            next(error);
-        }
+        res.status(201).json({
+            success: true,
+            data: user,
+        });
     }
 
-    async getById(req, res, next) {
+    async getById(req, res) {
+        const user = await this.userService.getUserById(req.params.id);
+
+        res.status(200).json({
+            success: true,
+            data: user,
+        });
+    }
+
+    async getByEmail(req, res) {
+        const user = await this.userService.getUserByEmail(req.params.email);
+
+        res.status(200).json({
+            success: true,
+            data: user,
+        });
+    }
+
+    async getMe(req, res) {
+        const user = await this.userService.getUserById(req.user.id);
+
+        res.status(200).json({
+            success: true,
+            data: user,
+        });
+    }
+
+    async update(req, res) {
         // TODO
     }
 
-    async getByEmail(req, res, next) {
-        // TODO
+    async delete(req, res) {
+        await this.userService.deleteUser(req.params.id);
+
+        res.status(204).send();
     }
 
-    async update(req, res, next) {
-        // TODO
-    }
+    async deleteMe(req, res) {
+        await this.userService.deleteUser(req.user.id);
 
-    async delete(req, res, next) {
-        // TODO
+        res.status(204).send();
     }
 }
 

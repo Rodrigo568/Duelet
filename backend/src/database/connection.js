@@ -12,18 +12,13 @@ const db = mysql.createPool({
 });
 
 export async function testConnection() {
-    try {
-        const connection = await db.getConnection();
-        connection.release();
+    const connection = await db.getConnection();
 
-        console.log("Database connection successful.");
-    } catch (error) {
-        console.error("Database connection failed:", error.message);
-        console.log(
-            "Please check your database configuration in the .env file. Closing application...",
-        );
-        process.exit(1);
-    }
+    connection.release();
+
+    console.log("Database connection successful.");
+
+    return true;
 }
 
 export async function initializeDatabase() {
