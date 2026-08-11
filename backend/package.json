@@ -1,0 +1,26 @@
+{
+    "name": "backend",
+    "module": "index.ts",
+    "type": "module",
+    "private": true,
+    "devDependencies": {
+        "@types/bun": "latest",
+        "prettier": "^3.9.6"
+    },
+    "peerDependencies": {
+        "typescript": "^5"
+    },
+    "dependencies": {
+        "bcrypt": "^6.0.0",
+        "cors": "^2.8.6",
+        "dotenv": "^17.4.2",
+        "express": "^5.2.1",
+        "mysql2": "^3.23.3"
+    },
+    "scripts": {
+        "dev": "bun --watch src/app.js",
+        "start": "bun src/app.js",
+        "lint": "eslint .",
+        "test": "bun test"
+    }
+}
