@@ -5,7 +5,8 @@ import { testConnection, initializeDatabase } from "./database/connection.js";
 import createAuthRoutes from "./routes/AuthRoutes.js";
 import createUserRoutes from "./routes/UserRoutes.js";
 import createSubjectRoutes from "./routes/SubjectRoutes.js";
-import { userController, authController, subjectController } from "./dependencies.js";
+import createTaskRoutes from "./routes/TaskRoutes.js";
+import { userController, authController, subjectController, taskController } from "./dependencies.js";
 import errorMiddleware from "./middleware/ErrorMiddleware.js";
 
 const app = express();
@@ -26,12 +27,15 @@ app.get("/api/health", (req, res) => {
 const authRoutes = createAuthRoutes(authController);
 const userRoutes = createUserRoutes(userController);
 const subjectRoutes = createSubjectRoutes(subjectController);
+const taskRoutes = createTaskRoutes(taskController);
 
 app.use("/api/auth", authRoutes);
 
 app.use("/api/users", userRoutes);
 
 app.use("/api/subjects", subjectRoutes);
+
+app.use("/api/tasks", taskRoutes);
 
 app.use(errorMiddleware);
 

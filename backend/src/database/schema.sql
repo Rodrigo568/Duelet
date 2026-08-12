@@ -12,9 +12,8 @@ CREATE TABLE IF NOT EXISTS users (
 
     UNIQUE KEY uq_users_email (email)
 ) ENGINE=InnoDB
-  DEFAULT CHARSET=utf8mb4
-  COLLATE=utf8mb4_unicode_ci;
-
+DEFAULT CHARSET=utf8mb4
+COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS subjects (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -37,9 +36,8 @@ CREATE TABLE IF NOT EXISTS subjects (
 
     UNIQUE KEY uq_subjects_user_id_id (user_id, id)
 ) ENGINE=InnoDB
-  DEFAULT CHARSET=utf8mb4
-  COLLATE=utf8mb4_unicode_ci;
-
+DEFAULT CHARSET=utf8mb4
+COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS tasks (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -49,9 +47,13 @@ CREATE TABLE IF NOT EXISTS tasks (
 
     title VARCHAR(200) NOT NULL,
     description TEXT NULL,
+    type VARCHAR(30) NOT NULL DEFAULT 'other',
 
     deadline DATETIME NOT NULL,
-    estimated_minutes INT UNSIGNED NOT NULL,
+
+    estimated_effort_minutes INT UNSIGNED NOT NULL,
+    estimation_method VARCHAR(20) NOT NULL DEFAULT 'manual',
+    estimation_metadata JSON NULL,
 
     priority TINYINT UNSIGNED NOT NULL DEFAULT 3,
     status VARCHAR(30) NOT NULL DEFAULT 'pending',
@@ -70,8 +72,8 @@ CREATE TABLE IF NOT EXISTS tasks (
         REFERENCES subjects(user_id, id)
         ON DELETE CASCADE,
 
-    CONSTRAINT chk_tasks_estimated_minutes
-        CHECK (estimated_minutes > 0),
+    CONSTRAINT chk_tasks_estimated_effort_minutes
+        CHECK (estimated_effort_minutes > 0),
 
     CONSTRAINT chk_tasks_priority
         CHECK (priority BETWEEN 1 AND 5),
@@ -83,9 +85,8 @@ CREATE TABLE IF NOT EXISTS tasks (
 
     UNIQUE KEY uq_tasks_user_id_id (user_id, id)
 ) ENGINE=InnoDB
-  DEFAULT CHARSET=utf8mb4
-  COLLATE=utf8mb4_unicode_ci;
-
+DEFAULT CHARSET=utf8mb4
+COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS availability (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -114,9 +115,8 @@ CREATE TABLE IF NOT EXISTS availability (
     INDEX idx_availability_user_id (user_id),
     INDEX idx_availability_day (day_of_week)
 ) ENGINE=InnoDB
-  DEFAULT CHARSET=utf8mb4
-  COLLATE=utf8mb4_unicode_ci;
-
+DEFAULT CHARSET=utf8mb4
+COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS study_sessions (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -150,5 +150,5 @@ CREATE TABLE IF NOT EXISTS study_sessions (
     INDEX idx_study_sessions_task_id (task_id),
     INDEX idx_study_sessions_start_at (start_at)
 ) ENGINE=InnoDB
-  DEFAULT CHARSET=utf8mb4
-  COLLATE=utf8mb4_unicode_ci;
+DEFAULT CHARSET=utf8mb4
+COLLATE=utf8mb4_unicode_ci;
