@@ -98,8 +98,8 @@ class TaskRepository {
                 type = ?,
                 deadline = ?,
                 estimated_effort_minutes = ?,
-                estimated_effort_method = ?,
-                estimated_metadata = ?,
+                estimation_method = ?,
+                estimation_metadata = ?,
                 priority = ?,
                 status = ?
             WHERE id = ?
@@ -113,8 +113,8 @@ class TaskRepository {
             task.type,
             task.deadline,
             task.estimatedEffortMinutes,
-            task.estimatedEffortMethod,
-            JSON.stringify(task.estimatedMetadata),
+            task.estimationMethod,
+            task.estimationMetadata === null ? null : JSON.stringify(task.estimationMetadata),
             task.priority,
             task.status,
             task.id,

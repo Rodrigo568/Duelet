@@ -36,7 +36,7 @@ const subjectController = new SubjectController(subjectService);
 
 // Task
 const taskRepository = new TaskRepository(db);
-const taskService = new TaskService(taskRepository);
+const taskService = new TaskService(taskRepository, subjectRepository);
 const taskController = new TaskController(taskService);
 
 export {
