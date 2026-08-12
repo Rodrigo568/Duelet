@@ -14,6 +14,11 @@ import SubjectRepository from "./repositories/SubjectRepository.js";
 import SubjectService from "./services/SubjectService.js";
 import SubjectController from "./controllers/SubjectController.js";
 
+// Tasksss
+import TaskRepository from "./repositories/TaskRepository.js";
+import TaskService from "./services/TaskService.js";
+import TaskController from "./controllers/TaskController.js";
+
 // User
 const userRepository = new UserRepository(db);
 const userService = new UserService(userRepository);
@@ -29,6 +34,11 @@ const subjectRepository = new SubjectRepository(db);
 const subjectService = new SubjectService(subjectRepository);
 const subjectController = new SubjectController(subjectService);
 
+// Task
+const taskRepository = new TaskRepository(db);
+const taskService = new TaskService(taskRepository, subjectRepository);
+const taskController = new TaskController(taskService);
+
 export {
     userRepository,
     userService,
@@ -38,4 +48,7 @@ export {
     subjectRepository,
     subjectService,
     subjectController,
+    taskRepository,
+    taskService,
+    taskController,
 };
