@@ -12,6 +12,10 @@ jobs:
       run:
         working-directory: backend
 
+    env:
+      JWT_SECRET: unit-test-secret
+      JWT_EXPIRES_IN: 24h
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
