@@ -2,10 +2,11 @@ import "dotenv/config";
 import express from "express";
 import cors from "cors";
 import { testConnection, initializeDatabase } from "./database/connection.js";
-import createUserRoutes from "./routes/UserRoutes.js";
-import { userController, authController } from "./dependencies.js";
-import errorMiddleware from "./middleware/ErrorMiddleware.js";
 import createAuthRoutes from "./routes/AuthRoutes.js";
+import createUserRoutes from "./routes/UserRoutes.js";
+import createSubjectRoutes from "./routes/SubjectRoutes.js";
+import { userController, authController, subjectController } from "./dependencies.js";
+import errorMiddleware from "./middleware/ErrorMiddleware.js";
 
 const app = express();
 
@@ -24,10 +25,13 @@ app.get("/api/health", (req, res) => {
 // register routes
 const authRoutes = createAuthRoutes(authController);
 const userRoutes = createUserRoutes(userController);
+const subjectRoutes = createSubjectRoutes(subjectController);
 
 app.use("/api/auth", authRoutes);
 
 app.use("/api/users", userRoutes);
+
+app.use("/api/subjects", subjectRoutes);
 
 app.use(errorMiddleware);
 
