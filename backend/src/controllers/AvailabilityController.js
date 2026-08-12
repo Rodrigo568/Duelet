@@ -3,7 +3,7 @@ class AvailabilityController {
         this.availabilityService = availabilityService;
     }
 
-    async createAvailability(req, res) {
+    async create(req, res) {
         const userId = req.user.id;
         const availabilityData = req.body;
 
@@ -15,7 +15,7 @@ class AvailabilityController {
         });
     }
 
-    async getAllAvailabilities(req, res) {
+    async getAll(req, res) {
         const userId = req.user.id;
 
         const availabilities = await this.availabilityService.getAllAvailabilities(userId);
@@ -26,7 +26,7 @@ class AvailabilityController {
         });
     }
 
-    async updateAvailability(req, res) {
+    async update(req, res) {
         const userId = req.user.id;
         const availabilityId = req.params.id;
         const availabilityData = req.body;
@@ -43,7 +43,7 @@ class AvailabilityController {
         });
     }
 
-    async deleteAvailability(req, res) {
+    async delete(req, res) {
         const userId = req.user.id;
         const availabilityId = req.params.id;
 

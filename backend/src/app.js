@@ -36,6 +36,7 @@ const userRoutes = createUserRoutes(userController);
 const subjectRoutes = createSubjectRoutes(subjectController);
 const taskRoutes = createTaskRoutes(taskController);
 const availabilityRoutes = createAvailabilityRoutes(availabilityController);
+
 app.use("/api/auth", authRoutes);
 
 app.use("/api/users", userRoutes);
