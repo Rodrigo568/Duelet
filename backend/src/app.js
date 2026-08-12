@@ -6,7 +6,14 @@ import createAuthRoutes from "./routes/AuthRoutes.js";
 import createUserRoutes from "./routes/UserRoutes.js";
 import createSubjectRoutes from "./routes/SubjectRoutes.js";
 import createTaskRoutes from "./routes/TaskRoutes.js";
-import { userController, authController, subjectController, taskController } from "./dependencies.js";
+import createAvailabilityRoutes from "./routes/AvailabilityRoutes.js";
+import {
+    userController,
+    authController,
+    subjectController,
+    taskController,
+    availabilityController,
+} from "./dependencies.js";
 import errorMiddleware from "./middleware/ErrorMiddleware.js";
 
 const app = express();
@@ -28,7 +35,7 @@ const authRoutes = createAuthRoutes(authController);
 const userRoutes = createUserRoutes(userController);
 const subjectRoutes = createSubjectRoutes(subjectController);
 const taskRoutes = createTaskRoutes(taskController);
-
+const availabilityRoutes = createAvailabilityRoutes(availabilityController);
 app.use("/api/auth", authRoutes);
 
 app.use("/api/users", userRoutes);
@@ -36,6 +43,8 @@ app.use("/api/users", userRoutes);
 app.use("/api/subjects", subjectRoutes);
 
 app.use("/api/tasks", taskRoutes);
+
+app.use("/api/availability", availabilityRoutes);
 
 app.use(errorMiddleware);
 

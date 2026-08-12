@@ -19,6 +19,11 @@ import TaskRepository from "./repositories/TaskRepository.js";
 import TaskService from "./services/TaskService.js";
 import TaskController from "./controllers/TaskController.js";
 
+// Availability
+import AvailabilityRepository from "./repositories/AvailabilityRepository.js";
+import AvailabilityService from "./services/AvailabilityService.js";
+import AvailabilityController from "./controllers/AvailabilityController.js";
+
 // User
 const userRepository = new UserRepository(db);
 const userService = new UserService(userRepository);
@@ -39,6 +44,11 @@ const taskRepository = new TaskRepository(db);
 const taskService = new TaskService(taskRepository, subjectRepository);
 const taskController = new TaskController(taskService);
 
+// Availability
+const availabilityRepository = new AvailabilityRepository(db);
+const availabilityService = new AvailabilityService(availabilityRepository);
+const availabilityController = new AvailabilityController(availabilityService);
+
 export {
     userRepository,
     userService,
@@ -51,4 +61,7 @@ export {
     taskRepository,
     taskService,
     taskController,
+    availabilityRepository,
+    availabilityService,
+    availabilityController,
 };
